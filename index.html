@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css"> 
+</head>
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="./images/logo/header__logo.svg" alt="место Россия на английском языке">
+  </header>
+  <main>
+    <section class="profile">
+      <img class="profile__avatar" src="./images/profile_image.jpg" alt="фотография человека, которому принадлежит этот профиль">
+      <div class="profile__info">
+        <div class="profile__main-info">
+          <h1 class="profile__name"></h1>
+          <button class="profile__edit-button" type="button"></button> 
+        </div>
+          <p class="profile__text"></p> 
+      </div>
+      <div class="profile__buttons">
+        <button class="profile__add-button" type="button"></button>
+      </div>
+    </section>
+    <section class="elements">
+      <div class="element">
+        <img class="element__image" src="./images/Krasnodar.jpg" alt="">
+        <div class="element__group"> 
+          <h2 class="element__title">Краснодар</h2>
+          <button class="element__button" type="button"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img class="element__image" src="./images/Sochi.jpg" alt="">
+        <div class="element__group"> 
+          <h2 class="element__title">Сочи</h2>
+          <button class="element__button" type="button"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img class="element__image" src="./images/St.Peresburg.jpg" alt="">
+        <div class="element__group"> 
+          <h2 class="element__title">Санкт-Петерррбург</h2>
+          <button class="element__button" type="button"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img class="element__image" src="./images/Kaliningrad.jpg" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Калининград</h2>
+          <button class="element__button" type="button"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img class="element__image" src="./images/Moscow.jpg" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Москва</h2>
+          <button class="element__button" type="button"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img class="element__image" src="./images/Abhazia.jpg" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Абхазия</h2>
+          <button class="element__button" type="button"></button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2023 Елена Устименко</p>
+  </footer>
+  <section class="popup">
+    <div class="popup__container">
+      <button class="popup__close"></button>
+      <h3 class="popup__header">Редактировать профиль</h3>
+      <form action="#" method="get" class="popup__form">
+        <input type="text" name="popup__name" value="" class="popup__name"/>
+        <input type="text" name="popup__text" value="" class="popup__text"/>
+        <button name="button" type="submit" class="popup__save">Сохранить</button>
+      </form>
+    </div>
+  </section>
+<script src="./scripts/index.js"></script> 
+</body>
+</html>
