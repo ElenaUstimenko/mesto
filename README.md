@@ -7,7 +7,7 @@
 Проект разрабатывался с применением методолгии БЭМ.   
 Файловая структура оформлена в соответствии с правилами Nested БЭМ.  
 
-
+https://elenaustimenko.github.io/mesto/index.html
 
 ______________
 
@@ -21,4 +21,4 @@ The project was designed using HTML and CSS (flexbox, grid etc.) and Java Script
 The project was designed using the BEM methodology.  
 The file structure is designed in accordance with the rules of Nested BEM.  
 
-
+https://elenaustimenko.github.io/mesto/index.html
