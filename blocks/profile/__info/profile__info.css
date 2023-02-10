@@ -1,9 +1,15 @@
 .profile__info {
   max-width: 336px;
-  min-height: 73px;
   box-sizing: border-box;
   margin-left: 30px;
-  margin-top: 62px;
+  margin-top: 60px;
+}
+
+@media screen and (max-width: 748px) {
+  .profile__info {
+    margin-top: 0;
+    margin-left: 0;
+  }
 }
 
 @media screen and (max-width: 320px) {

@@ -10,79 +10,82 @@
   <header class="header">
     <img class="header__logo" src="./images/logo/header__logo.svg" alt="место Россия на английском языке">
   </header>
-  <main>
+  <main class="content">
     <section class="profile">
       <img class="profile__avatar" src="./images/profile_image.jpg" alt="фотография человека, которому принадлежит этот профиль">
       <div class="profile__info">
         <div class="profile__main-info">
-          <h1 class="profile__name"></h1>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button"></button> 
         </div>
-          <p class="profile__text"></p> 
+          <p class="profile__text">Исследователь океана</p> 
       </div>
-      <div class="profile__buttons">
-        <button class="profile__add-button" type="button"></button>
-      </div>
+      <button class="profile__add-button" type="button"></button>
     </section>
     <section class="elements">
-      <div class="element">
-        <img class="element__image" src="./images/Krasnodar.jpg" alt="">
+      <article class="element">
+        <img class="element__image" src="./images/Krasnodar.jpg" alt="фотография фонтана в виде водопада, 
+        находящегося в парке города Краснодар">
         <div class="element__group"> 
           <h2 class="element__title">Краснодар</h2>
           <button class="element__button" type="button"></button>
         </div>
-      </div>
-      <div class="element">
-        <img class="element__image" src="./images/Sochi.jpg" alt="">
+      </article>
+      <article class="element">
+        <img class="element__image" src="./images/Sochi.jpg" alt="фотография заснеженных домов и гор">
         <div class="element__group"> 
           <h2 class="element__title">Сочи</h2>
           <button class="element__button" type="button"></button>
         </div>
-      </div>
-      <div class="element">
-        <img class="element__image" src="./images/St.Peresburg.jpg" alt="">
+      </article>
+      <article class="element">
+        <img class="element__image" src="./images/St.Peresburg.jpg" alt="фотография Казанского собора, 
+        находящегося в городе Санкт-Петербург">
         <div class="element__group"> 
           <h2 class="element__title">Санкт-Петерррбург</h2>
           <button class="element__button" type="button"></button>
         </div>
-      </div>
-      <div class="element">
-        <img class="element__image" src="./images/Kaliningrad.jpg" alt="">
+      </article>
+      <article class="element">
+        <img class="element__image" src="./images/Kaliningrad.jpg" alt="фотография Кафедрального собора, 
+        находящегося в городе Калининград">
         <div class="element__group">
           <h2 class="element__title">Калининград</h2>
           <button class="element__button" type="button"></button>
         </div>
-      </div>
-      <div class="element">
-        <img class="element__image" src="./images/Moscow.jpg" alt="">
+      </article>
+      <article class="element">
+        <img class="element__image" src="./images/Moscow.jpg" alt="фотография здания из московского
+        международного делового центра Москва-Сити, находящегося в городе Москва">
         <div class="element__group">
           <h2 class="element__title">Москва</h2>
           <button class="element__button" type="button"></button>
         </div>
-      </div>
-      <div class="element">
-        <img class="element__image" src="./images/Abhazia.jpg" alt="">
+      </article>
+      <article class="element">
+        <img class="element__image" src="./images/Abhazia.jpg" alt="фотография остановочного пункта 
+        железной дороги - полуразрушенной станции Псырцха, находящейся в городе Новый Афон в Абхазии">
         <div class="element__group">
           <h2 class="element__title">Абхазия</h2>
           <button class="element__button" type="button"></button>
         </div>
-      </div>
+      </article>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2023 Елена Устименко</p>
   </footer>
-  <section class="popup">
+  <div class="popup">
     <div class="popup__container">
-      <button class="popup__close"></button>
+      <button class="popup__close" type="button"></button>
       <h3 class="popup__header">Редактировать профиль</h3>
-      <form action="#" method="get" class="popup__form">
-        <input type="text" name="popup__name" value="" class="popup__name"/>
-        <input type="text" name="popup__text" value="" class="popup__text"/>
+      <form action="#" method="get" name="popup_profile" class="popup__form">
+        <input type="text" name="popup__name" value="" class="popup__text popup__text_type_name"/>
+        <input type="text" name="popup__profession" value="" class="popup__text popup__text_type_profession"/>
         <button name="button" type="submit" class="popup__save">Сохранить</button>
       </form>
     </div>
-  </section>
+  </div>
 <script src="./scripts/index.js"></script> 
 </body>
 </html>

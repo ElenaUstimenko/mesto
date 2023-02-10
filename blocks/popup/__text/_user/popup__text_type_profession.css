@@ -1,0 +1,9 @@
+.popup__text_type_profession {
+  margin: 30px 0 48px 0;
+}
+
+@media screen and (max-width: 320px) {
+  .popup__text_type_profession {
+    margin-bottom: 45px;
+  }
+}
