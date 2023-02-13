@@ -12,8 +12,29 @@
   padding: 0 0 13px 0;
 }
 
+.popup__text:nth-child(1) {
+  margin: 0;
+}
+
+.popup__text:nth-child(2) {
+  margin: 26px 0 48px 0;
+}
+
 @media screen and (max-width: 320px) {
   .popup__text {
     max-width: 238px;
+    padding-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__text:nth-child(1) {
+    margin-top: 75px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__text:nth-child(2) {
+    margin-bottom: 45px;
   }
 }
