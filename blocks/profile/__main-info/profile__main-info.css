@@ -7,11 +7,8 @@
 }
 
 @media screen and (max-width: 748px) {
-  .pprofile__main-info {
+  .profile__main-info {
     text-align: center;
-    width: calc(100% - 38px);
-    padding-left: auto;
-    padding-right: auto;
   }
 }
 
