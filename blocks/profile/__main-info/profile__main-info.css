@@ -9,6 +9,7 @@
 @media screen and (max-width: 748px) {
   .profile__main-info {
     text-align: center;
+    justify-content: center;
   }
 }
 
