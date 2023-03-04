@@ -1,5 +1,5 @@
 const buttonOpenAditProfile = document.querySelector('.profile__edit-button');
-const popupAditProfile = document.querySelector('.popup__adit-profile');
+const popupAditProfile = document.querySelector('.popup_adit-profile');
 const buttonCloseAditProfile = popupAditProfile.querySelector('.popup__close');
 
 const popupForm = document.querySelector('.popup__form');
@@ -9,7 +9,7 @@ const nameProfile = document.querySelector('.profile__name');
 const jobProfile = document.querySelector('.profile__text');
 
 const buttonOpenAddImage = document.querySelector('.profile__add-button');
-const popupAddImage = document.querySelector('.popup__add-image');
+const popupAddImage = document.querySelector('.popup_add-image');
 const buttonCloseAddImage = popupAddImage.querySelector('.popup__close_add-image');
 const popupPlaceTextInput = document.querySelector('.popup__text_type_place');
 const popupImageLinkInput = document.querySelector('.popup__text_type_link');
@@ -19,7 +19,7 @@ const cardListWrapper = document.querySelector('.elements');
 const popupAddImageForm = document.querySelector('.popup__form_add-image');
 const templateAddNewCard = document.getElementById('card_element');
 
-const popupOpenBigImage = document.querySelector('.popup__open-image');
+const popupOpenBigImage = document.querySelector('.popup_open-image');
 const buttonCloseBigImage = popupOpenBigImage.querySelector('.popup__close_open-image');
 const paragraphOpenBigImage = popupOpenBigImage.querySelector('.popup__paragraph');
 const imageOpenBigImage = popupOpenBigImage.querySelector('.popup__image');
