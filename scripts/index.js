@@ -1,8 +1,7 @@
-const buttonOpenAditProfile = document.querySelector('.profile__edit-button');
-const popupAditProfile = document.querySelector('.popup_adit-profile');
-const buttonCloseAditProfile = popupAditProfile.querySelector('.popup__close');
-
-const popupForm = document.querySelector('.popup__form');
+const buttonOpenEditProfile = document.querySelector('.profile__edit-button');
+const popupEditProfile = document.querySelector('.popup_adit-profile');
+const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close');
+const formEditProfile = document.querySelector('.popup__form');
 const nameInputAditProfile = document.querySelector('.popup__text_type_name');
 const jobInputAditProfile = document.querySelector('.popup__text_type_profession');
 const nameProfile = document.querySelector('.profile__name');
@@ -13,8 +12,6 @@ const popupAddImage = document.querySelector('.popup_add-image');
 const buttonCloseAddImage = popupAddImage.querySelector('.popup__close_add-image');
 const popupPlaceTextInput = document.querySelector('.popup__text_type_place');
 const popupImageLinkInput = document.querySelector('.popup__text_type_link');
-const popupFormAddImage = document.querySelector('.popup__form_add-image');
-
 const cardListWrapper = document.querySelector('.elements');
 const popupAddImageForm = document.querySelector('.popup__form_add-image');
 const templateAddNewCard = document.getElementById('card_element');
@@ -26,7 +23,6 @@ const imageOpenBigImage = popupOpenBigImage.querySelector('.popup__image');
 
 const popup = document.querySelector('.popup');
 
-
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 }
@@ -35,21 +31,21 @@ const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
 }
 
-function openAditProfileForm () {
-  openPopup(popupAditProfile);
+function openEditProfileForm () {
+  openPopup(popupEditProfile);
   nameInputAditProfile.value = nameProfile.textContent;
   jobInputAditProfile.value = jobProfile.textContent;
 }
 
-function closeAditProfileForm () {
-  closePopup(popupAditProfile);
+function closeEditProfileForm () {
+  closePopup(popupEditProfile);
 }
 
-function submitAditProfileForm (evt) {
+function submitEditProfileForm (evt) {
   evt.preventDefault();
   nameProfile.textContent = nameInputAditProfile.value;
   jobProfile.textContent = jobInputAditProfile.value;
-  closePopup(popupAditProfile);
+  closePopup(popupEditProfile);
 } 
 
 function openAddImageForm () {
@@ -60,20 +56,15 @@ function closeAddImageForm () {
   closePopup(popupAddImage);
 }
 
-function submitAddImageForm (evt) {
-  evt.preventDefault();
-  closePopup(popupAddImage);
-} 
-
 function closeBigImage () {
   closePopup(popupOpenBigImage);
 }
 
 const deleteCardElement = (evt) => {
   evt.target.closest('.element').remove();
-};
+}
 
-const getAddNewCardElement = (item) => {
+const createCard = (item) => {
   const cardNewElement = templateAddNewCard.content.cloneNode(true);
   const cardNewElementTitle = cardNewElement.querySelector('.element__title');
   cardNewElementTitle.textContent = item.name;
@@ -99,7 +90,7 @@ const getAddNewCardElement = (item) => {
 }
 
 const renderNewCardElement = (wrap, item) => {
-  wrap.prepend(getAddNewCardElement(item));
+  wrap.prepend(createCard(item));
 }
 
 initialCards.forEach((item) => {
@@ -110,28 +101,22 @@ popupAddImageForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const name = popupPlaceTextInput.value;
   const link = popupImageLinkInput.value;
+  closePopup(popupAddImage);
 
   renderNewCardElement(cardListWrapper, {name, link});
-  popupPlaceTextInput.value = '';
-  popupImageLinkInput.value = '';
+  popupAddImageForm.reset();
 });
 
-
-buttonOpenAditProfile.addEventListener('click', openAditProfileForm);
-buttonCloseAditProfile.addEventListener('click', closeAditProfileForm);
-popupForm.addEventListener('submit', submitAditProfileForm);
+buttonOpenEditProfile.addEventListener('click', openEditProfileForm);
+buttonCloseEditProfile.addEventListener('click', closeEditProfileForm);
+formEditProfile.addEventListener('submit', submitEditProfileForm);
 
 buttonOpenAddImage.addEventListener('click', () => {
-  document.querySelector('.popup_type_add-image');
   openPopup(popupAddImage);
 });
 
 buttonCloseAddImage.addEventListener('click', () => {
   closeAddImageForm(popupAddImage);
-});
-
-popupFormAddImage.addEventListener('submit', () => {
-  closePopup(popupAddImage);
 });
 
 buttonCloseBigImage.addEventListener('click', () => {
