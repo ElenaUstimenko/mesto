@@ -30,22 +30,38 @@
   </footer>
   <div class="popup popup_adit-profile">
     <div class="popup__container">
-      <button class="popup__close" type="button"></button>
+      <button class="popup__close" type="reset"></button>
       <h3 class="popup__header">Редактировать профиль</h3>
-      <form action="#" method="get" name="popup_profile" class="popup__form">
-        <input type="text" name="popup__name" value="" class="popup__text popup__text_type_name" placeholder="Имя"/>
-        <input type="text" name="popup__profession" value="" class="popup__text popup__text_type_profession" placeholder="Вид деятельности"/>
+      <form action="#" method="get" name="popupProfile" class="popup__form" novalidate>
+        <label class="popup__field">
+          <input id="name-input" type="text" name="text__name" value="" class="popup__input popup__input_type_name"
+          placeholder="Имя" minlength="2" maxlength="40" required/>
+          <span class="name-input popup__input-error"></span>
+        </label> 
+        <label class="popup__field">
+          <input id="profession-input" type="text" name="text__profession" value="" class="popup__input popup__input_type_profession"
+          placeholder="Вид деятельности" minlength="2" maxlength="200" required/>
+          <span class="profession-input popup__input-error"></span>
+        </label>
         <button name="button" type="submit" class="popup__save">Сохранить</button>
       </form>
     </div>
   </div>
   <div class="popup popup_add-image">
     <div class="popup__container popup__container_type_add-image">
-      <button class="popup__close popup__close_add-image" type="button"></button>
+      <button class="popup__close popup__close_add-image" type="reset"></button>
       <h3 class="popup__header">Новое место</h3>
-      <form action="#" method="get" name="add_image" class="popup__form popup__form_add-image">
-        <input type="text" name="popup__place" value="" class="popup__text popup__text_type_place" placeholder="Название"/>
-        <input type="text" name="popup__link" value="" class="popup__text popup__text_type_link" placeholder="Ссылка на картинку"/>
+      <form action="#" method="get" name="popupImage" class="popup__form popup__form_add-image" novalidate>
+        <label class="popup__field">
+          <input id="place-input" type="text" name="text__place" value="" class="popup__input popup__input_type_place"
+          placeholder="Название" minlength="2" maxlength="30" required/>
+          <span class="place-input popup__input-error"></span>
+        </label>
+        <label class="popup__field">
+          <input id="link-input" name="link" value="" class="popup__input popup__input_type_link"
+          placeholder="Ссылка на картинку" type="url" required/>
+          <span class="link-input popup__input-error"></span>
+        </label>
         <button name="button" type="submit" class="popup__save popup__save_add-image">Сохранить</button>
       </form>
     </div>
@@ -70,6 +86,7 @@
     </li>
   </template>
 <script src="./scripts/constants.js"></script>
+<script src="./scripts/validate.js"></script>  
 <script src="./scripts/index.js"></script> 
 </body>
 </html>
