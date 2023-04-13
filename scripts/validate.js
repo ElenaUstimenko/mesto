@@ -73,7 +73,7 @@ const enableValidation = (validationOptions) => {
   });
 };
 
-//можно так:
+//another variant
 /*const enableValidation = ({
   formSelector,
   submitSelector,
