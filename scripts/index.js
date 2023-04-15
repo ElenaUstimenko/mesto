@@ -22,7 +22,6 @@ const placeTextInputAddImage = document.querySelector('.popup__input_type_place'
 const imageLinkInputAddImage = document.querySelector('.popup__input_type_link');
 const cardListWrapper = document.querySelector('.elements');
 
-//const templateAddNewCard = document.getElementById('card_element');
 const templateAddNewCard = document.querySelector('#card_element').content.querySelector('.element');
 
 const paragraphOpenBigImage = popupOpenBigImage.querySelector('.popup__paragraph');
@@ -30,29 +29,37 @@ const imageOpenBigImage = popupOpenBigImage.querySelector('.popup__image');
 
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEscape);
 };
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
-  //document.removeEventListener('keydown', closePopupByEscape);
+  document.removeEventListener('keydown', closePopupByEscape);
 };
 
-//first version
-const closePopupByEscape = (popup) => {
+//previous version of code
+/*const closePopupByEscape = (popup) => {
   document.addEventListener('keydown', (evt) => {
     if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
       closePopup(popup);
     };
   });
-};
+};*/
 
-//second version
+//previous version of code
 /*function closePopupByEscape(evt) {
   const popup = document.querySelector('.popup_opened') 
     if(evt.key === 'Escape' && popup) {
       closePopup(popup);
     }; 
   };*/
+
+function closePopupByEscape(evt) { 
+ if(evt.key === 'Escape') { 
+  const popup = document.querySelector('.popup_opened')// ищем открытый popup по классу 'popup_opened'
+  closePopup(popup);
+ };
+};
 
 const closePopupByOverlay = (popup) => {
   popup.addEventListener('mousedown', (evt) => {
@@ -64,8 +71,6 @@ const closePopupByOverlay = (popup) => {
 
 const popupsAllOnPage = document.querySelectorAll('.popup');
   popupsAllOnPage.forEach((popup) => {
-    closePopupByEscape(popup);
-    //document.addEventListener('keydown', closePopupByEscape);
     closePopupByOverlay(popup);
 });
 
