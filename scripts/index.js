@@ -1,3 +1,8 @@
+import { initialCards, validationOptions } from './constants.js';
+import Card from './Сard.js';
+import FormValidator from './FormValidator.js';
+//import { enableValidation, setInputState, disableButtonSave } from './validate.js'
+
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddImage = document.querySelector('.popup_add-image');
 const popupOpenBigImage = document.querySelector('.popup_open-image');
@@ -22,12 +27,10 @@ const placeTextInputAddImage = document.querySelector('.popup__input_type_place'
 const imageLinkInputAddImage = document.querySelector('.popup__input_type_link');
 const cardListWrapper = document.querySelector('.elements');
 
-const templateAddNewCard = document.querySelector('#card_element').content.querySelector('.element');
-
 const paragraphOpenBigImage = popupOpenBigImage.querySelector('.popup__paragraph');
 const imageOpenBigImage = popupOpenBigImage.querySelector('.popup__image');
 
-const openPopup = (popup) => {
+export const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEscape);
 };
@@ -36,23 +39,6 @@ const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupByEscape);
 };
-
-//previous version of code
-/*const closePopupByEscape = (popup) => {
-  document.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
-      closePopup(popup);
-    };
-  });
-};*/
-
-//previous version of code
-/*function closePopupByEscape(evt) {
-  const popup = document.querySelector('.popup_opened') 
-    if(evt.key === 'Escape' && popup) {
-      closePopup(popup);
-    }; 
-  };*/
 
 function closePopupByEscape(evt) { 
  if(evt.key === 'Escape') { 
@@ -78,10 +64,10 @@ function openEditProfileForm () {
   openPopup(popupEditProfile);
   nameInputAditProfile.value = nameProfile.textContent;
   jobInputAditProfile.value = jobProfile.textContent;
-
+//чистим форму редактирования профиля
   const findAndDeleteErrorEditProfile = Array.from(formEditProfile.querySelectorAll('.popup__input'));
     findAndDeleteErrorEditProfile.forEach(input => {
-    setInputState(input, true, validationOptions);
+    _checkInputStateValid(input, true, validationOptions);
   });
 };
 
@@ -95,15 +81,15 @@ function submitEditProfileForm (evt) {
   jobProfile.textContent = jobInputAditProfile.value;
   closePopup(popupEditProfile);
   formEditProfile.reset();
-  disableButtonSave(buttonSubmitSaveEditProfile, validationOptions.disabledButtonClass);
+  _disableButtonSave(buttonSubmitSaveEditProfile, validationOptions.disabledButtonClass);
   };
 
 function openAddImageForm () {
   openPopup(popupAddImage);
-
+//чистим форму добавления карточки
   const findAndDeleteErrorAddImage = Array.from(formAddImage.querySelectorAll('.popup__input'));
     findAndDeleteErrorAddImage.forEach(input => {
-    setInputState(input, true, validationOptions);
+    _checkInputStateValid(input, true, validationOptions);
   });
 };
 
@@ -115,12 +101,77 @@ function closeBigImage () {
   closePopup(popupOpenBigImage);
 };
 
-const deleteCardElement = (evt) => {
-  evt.target.closest('.element').remove();
+//open big image
+export const openBigImageCardElement = (name, link) => {
+  openPopup(popupOpenBigImage);
+  imageOpenBigImage.src  = link;
+  imageOpenBigImage.alt = name;
+  paragraphOpenBigImage.textContent = name;
 };
 
-const createCard = (item) => {
-  //const cardNewElement = templateAddNewCard.content.cloneNode(true);
+//добавление новой карточки
+  const renderNewCardElement = (wrap, item) => {
+  const card = new Card(item, '.card-template', '.card-template_type_default', openBigImageCardElement); //создаём экземпляр карточки
+  const cardElement = card.generateCard(); //создаём карточку и возвращаем её на страницу
+  wrap.prepend(cardElement);
+};
+
+//карточки при загрузке страницы
+initialCards.forEach((item) => {
+  renderNewCardElement(cardListWrapper, item);
+});
+
+//наполнение данными
+function fullNewCardTextAndLink (evt) {
+  evt.preventDefault();
+  const name = placeTextInputAddImage.value;
+  const link = imageLinkInputAddImage.value;
+  closePopup(popupAddImage);
+
+  renderNewCardElement(cardListWrapper, {name, link});
+  formAddImage.reset();
+  _disableButtonSave(buttonSubmitSaveAddImage, validationOptions.disabledButtonClass);
+};
+
+formEditProfile.addEventListener('submit', submitEditProfileForm);
+formAddImage.addEventListener('submit', fullNewCardTextAndLink);
+
+buttonOpenEditProfile.addEventListener('click', openEditProfileForm);
+buttonCloseEditProfile.addEventListener('click', closeEditProfileForm);
+
+buttonOpenAddImage.addEventListener('click', () => {
+  openPopup(popupAddImage);
+});
+
+buttonCloseAddImage.addEventListener('click', () => {
+  closeAddImageForm(popupAddImage);
+});
+
+buttonCloseBigImage.addEventListener('click', () => {
+  closePopup(popupOpenBigImage);
+});
+
+//валидация
+//const formEditProfile = document.querySelector('.popup__form_edit-profile');
+//const formAddImage = document.querySelector('.popup__form_add-image');
+const formEditProfileValidator = new FormValidator(validationOptions, formEditProfile);
+const formAddImagValidator = new FormValidator(validationOptions, formAddImage);
+
+formEditProfileValidator.enableValidation(validationOptions);
+formAddImagValidator.enableValidation(validationOptions);
+
+//убираем для ПР 7 из index.js
+//enableValidation(validationOptions);
+
+//const templateAddNewCard = document.querySelector('#card_element').content.querySelector('.element');// в классе Card
+
+//убираем для ПР 7 из index.js
+/*const deleteCardElement = (evt) => {
+  evt.target.closest('.element').remove();
+};*/
+
+//убираем для ПР 7 из index.js
+/*const createCard = (item) => {
   const cardNewElement = templateAddNewCard.cloneNode(true);
   const cardNewElementTitle = cardNewElement.querySelector('.element__title');
   cardNewElementTitle.textContent = item.name;
@@ -143,70 +194,9 @@ const createCard = (item) => {
   });
 
   return cardNewElement;
-};
+};*/
 
-const renderNewCardElement = (wrap, item) => {
+//убираем для ПР 7 из index.js
+/*const renderNewCardElement = (wrap, item) => {
   wrap.prepend(createCard(item));
-};
-
-initialCards.forEach((item) => {
-  renderNewCardElement(cardListWrapper, item);
-});
-
-function fullNewCardTextAndLink (evt) {
-  evt.preventDefault();
-  const name = placeTextInputAddImage.value;
-  const link = imageLinkInputAddImage.value;
-  closePopup(popupAddImage);
-
-  renderNewCardElement(cardListWrapper, {name, link});
-  formAddImage.reset();
-  disableButtonSave(buttonSubmitSaveAddImage, validationOptions.disabledButtonClass);
-};
-
-formEditProfile.addEventListener('submit', submitEditProfileForm);
-formAddImage.addEventListener('submit', fullNewCardTextAndLink);
-
-buttonOpenEditProfile.addEventListener('click', openEditProfileForm);
-buttonCloseEditProfile.addEventListener('click', closeEditProfileForm);
-
-buttonOpenAddImage.addEventListener('click', () => {
-  openPopup(popupAddImage);
-});
-
-buttonCloseAddImage.addEventListener('click', () => {
-  closeAddImageForm(popupAddImage);
-});
-
-buttonCloseBigImage.addEventListener('click', () => {
-  closePopup(popupOpenBigImage);
-});
-
-enableValidation(validationOptions);
-
-//previous version of code
-/*buttonCloseEditProfile.addEventListener('click', () => {
-  const inputs = Array.from(formEditProfile.querySelectorAll('.popup__input'));
-  inputs.forEach(input => {
-    setInputState(input, true, validationOptions);
-  });
-  disableButtonSave(buttonSubmitSaveEditProfile, validationOptions.disabledButtonClass);
-});*/
-
-//previous version of code
-/*buttonCloseAddImage.addEventListener('click', () => {
-  const inputs = Array.from(formAddImage.querySelectorAll('.popup__input'));
-  inputs.forEach(input => {
-    setInputState(input, true, validationOptions);
-  });
-  disableButtonSave(buttonSubmitSaveAddImage, validationOptions.disabledButtonClass);
-});*/
-
-//previous version of code
-/*buttonsResetPopupAllOnPage.addEventListener('click', () => {
-  const inputs = Array.from(formsSignInPopupAllOnPage.querySelectorAll('.popup__input'));
-  inputs.forEach(input => {
-    setInputState(input, true, validationOptions);
-  });
-  disableButtonSave(buttonSubmitSaveEditProfile, buttonSubmitSaveAddImage, validationOptions.disabledButtonClass);
-});*/
+};*/

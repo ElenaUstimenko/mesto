@@ -35,3 +35,5 @@ const validationOptions = {
   inputErrorLineClass: 'popup__input_invalid',
   disabledButtonClass: 'popup__save_inactive',
 };
+
+export { initialCards, validationOptions };
