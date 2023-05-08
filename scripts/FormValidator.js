@@ -1,89 +1,100 @@
 import { validationOptions } from './constants.js';
+//import { popupsAllOnPage } from './index.js'
 
 //принимает вторым параметром элемент той формы, которая валидируется
 export default class FormValidator {
-  constructor (validationOptions, formSelector) {
+  constructor (validationOptions, inputSelector) {
     this._validationOptions = validationOptions;
-    this._formSelector = validationOptions.formSelector;//popup's form
-    this._inputElement = this._formSelector.querySelector('.popup__input');//validationOptions.inputSelector
-    this._buttonElement = this._formSelector.querySelector('.popup__save');//validationOptions.submitSelector
-    this._inputs = Array.from(form.querySelectorAll(validationOptions.inputSelector));
+    //this._formSelector = validationOptions.formSelector;//popup's form
+    this.form = /*popupsAllOnPage*/document.querySelector('.popup__form');
+    this.inputElement = this.form.querySelector('.popup__input');//validationOptions.inputSelector
   };
 
-  //показать или убрать ошибку
-  _showInputError = (inputElement, message) => {
-    //const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`)
-    const inputFieldElement = inputElement.closest(this.validationOptions.inputSectionSelector);
-    const errorElement = inputFieldElement.querySelector(this.validationOptions.inputErrorSelector);
+  //показать ошибку
+  _showInputError = (inputElement, message, validationOptions) => {
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`)
+    //const inputFieldElement = inputElement.closest(this._validationOptions.inputSectionSelector);
+    //const errorElement = inputFieldElement.querySelector(this._validationOptions.inputErrorSelector);
     errorElement.innerText = message;
-    errorElement.classList.add(this.validationOptions.inputErrorClass);
-    inputElement.classList.add(this.validationOptions.inputErrorLineClass);
+    errorElement.classList.add(validationOptions.inputErrorClass);
+    inputElement.classList.add(validationOptions.inputErrorLineClass);
   };
 
-  _hideInputError = (inputElement) => {
-    //const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`)
-    const inputFieldElement = inputElement.closest(this.validationOptions.inputSectionSelector);
-    const errorElement = inputFieldElement.querySelector(this.validationOptions.inputErrorSelector);
+//убрать ошибку
+  _hideInputError = (inputElement, validationOptions) => {
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`)
+    //const inputFieldElement = inputElement.closest(this._validationOptions.inputSectionSelector);
+    //const errorElement = inputFieldElement.querySelector(this._validationOptions.inputErrorSelector);
     errorElement.innerText = ' ';
-    errorElement.classList.remove(this.validationOptions.inputErrorClass);
-    inputElement.classList.remove(this.validationOptions.inputErrorLineClass);
-  };
-
-  //кнопка Сохранить включается для нажатия
-  _enableButtonSave = (buttonElement) => {
-    buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove(this.validationOptions.disabledButtonClass);
-  };
-
-  //кнопка Сохранить отключается для нажатия
-  _disableButtonSave = (buttonElement) => {
-    buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add(this.validationOptions.disabledButtonClass);
+    errorElement.classList.remove(validationOptions.inputErrorClass);
+    inputElement.classList.remove(validationOptions.inputErrorLineClass);
   };
 
   //валидность input (setInputState в validate.js)
-  _checkInputStateValid = (inputElement, isValid, options) => {
-    //const {inputSectionSelector, inputErrorSelector, inputErrorClass, inputErrorLineClass} = options;
+  _checkInputStateValid = (inputElement, isValid, validationOptions) => {
     //const inputFieldElement = this._inputElement.closest(inputSectionSelector);
     //const errorElement = this._inputFieldElement.querySelector(inputErrorSelector);
     if (inputElement.validity.valid) {
-      this._hideInputError(inputElement/*, inputErrorClass*/);
-      this._hideInputErrorRedLine(inputElement/*, inputErrorLineClass*/);
+      this._hideInputError(inputElement, validationOptions);
+      //this._hideInputErrorRedLine(inputElement/*, inputErrorLineClass*/);
     } else {
-      this._showInputError(errorElement, inputElement.validationMessage/*, inputErrorClass*/);
-      this._showInputErrorRedLine(inputElement/*, inputErrorLineClass*/);
+      this._showInputError(inputElement, message, validationOptions);
+      //this._showInputErrorRedLine(inputElement/*, inputErrorLineClass*/);
     };
   }
 
   //валидность формы для кнопки (toggleButtonState в validate.js)
-  _toggleButtonStateValid = () => {
+  _toggleButtonStateValid = (validationOptions, buttonElement) => {
+
     const formIsValid = inputs.every(inputElement => inputElement.validity.valid);
     if (formIsValid) {
-      this._enableButtonSave(buttonElement);
+      this._buttonElement.removeAttribute('disabled');
+      this._buttonElement.classList.remove(this._validationOptions.disabledButtonClass);
+      //this._enableButtonSave(validationOptions.disabledButtonClass);
     } else {
-      this._disableButtonSave(buttonElement);
+      this._buttonElement.setAttribute('disabled', true);
+      this._buttonElement.classList.add(this._validationOptions.disabledButtonClass);
+      //this._disableButtonSave(validationOptions.disabledButtonClass);
     };
   };
 
   //пройтись по массиву и на каждое поле ввода навесить слушатель для проверки на валидность полей и кнопки
-  _setEventListeners = () => {
-    this._inputs.forEach((inputSelector) => {
-      inputSelector.addEventListener('input', () => {
-        this._checkInputStateValid(inputElement, isValid, options)
-        this._toggleButtonStateValid(inputs, submitElement, this.validationOptions.disabledButtonClass);
+  _setEventListeners = (form, validationOptions) => {
+    const submitElement = form.querySelector(options.submitSelector);
+    const inputs = Array.from(form.querySelectorAll('.popup__input'));
+    const buttonElement = form.querySelector('.popup__save');//validationOptions.submitSelector
+
+    inputs.forEach((inputElement) => {
+      inputElement.addEventListener('input', () => {
+        this._checkInputStateValid(inputElement, isValid, validationOptions)
+        this._toggleButtonStateValid(inputs, submitElement, this._validationOptions.disabledButtonClass);
         });
       });
-    _toggleButtonStateValid(inputs, submitElement, this.validationOptions.disabledButtonClass);
+    _toggleButtonStateValid(inputs, submitElement, validationOptions.disabledButtonClass);
   };
 
 //публичный метод enableValidation, который включает валидацию формы
 //проверка каждой формы на валидность, слушатель на каждую форму
-  enableValidation = (validationOptions) => {
-    //const forms = Array.from(document.querySelectorAll(validationOptions.formSelector));
-    this._formSelector.forEach(form => {
-      this._formSelector.addEventListener('input', () => {
-        this._setEventListeners(form, validationOptions);
+  enableValidation = () => {
+    const forms = Array.from(document.querySelectorAll('.popup__form'));
+    forms.forEach(form => {
+      //forms.forEach(form => {
+        _setEventListeners(form, validationOptions);
       });
-    });
+      //this.form.addEventListener('input', () => {
+        //this._setEventListeners(inputElement, validationOptions);
+      //});
+   // });
   };
 };
+
+//кнопка Сохранить включается для нажатия
+  //_enableButtonSave = (validationOptions, buttonElement) => {
+    //this._buttonElement.removeAttribute('disabled');
+    //this._buttonElement.classList.remove(this._validationOptions.disabledButtonClass);
+  //};
+  //кнопка Сохранить отключается для нажатия
+  //_disableButtonSave = (validationOptions, buttonElement) => {
+    //this._buttonElement.setAttribute('disabled', true);
+   // this._buttonElement.classList.add(this._validationOptions.disabledButtonClass);
+  //};

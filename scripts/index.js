@@ -55,7 +55,7 @@ const closePopupByOverlay = (popup) => {
   });
 };
 
-const popupsAllOnPage = document.querySelectorAll('.popup');
+export const popupsAllOnPage = document.querySelectorAll('.popup');
   popupsAllOnPage.forEach((popup) => {
     closePopupByOverlay(popup);
 });
