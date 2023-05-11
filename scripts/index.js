@@ -1,7 +1,6 @@
 import { initialCards, validationOptions } from './constants.js';
 import Card from './Сard.js';
 import FormValidator from './FormValidator.js';
-//import { enableValidation, setInputState, disableButtonSave } from './validate.js'
 
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddImage = document.querySelector('.popup_add-image');
@@ -64,11 +63,12 @@ function openEditProfileForm () {
   openPopup(popupEditProfile);
   nameInputAditProfile.value = nameProfile.textContent;
   jobInputAditProfile.value = jobProfile.textContent;
-//чистим форму редактирования профиля
-  const findAndDeleteErrorEditProfile = Array.from(formEditProfile.querySelectorAll('.popup__input'));
-    findAndDeleteErrorEditProfile.forEach(input => {
-    _checkInputStateValid(input, true, validationOptions);
-  });
+  //убираем для ПР 7 из index.js
+  //const findAndDeleteErrorEditProfile = Array.from(formEditProfile.querySelectorAll('.popup__input'));
+    //findAndDeleteErrorEditProfile.forEach(input => {
+     // _checkInputStateValid(inputElement, /*input, true, */validationOptions);
+  //});
+  formEditProfileValidator._resetErrorForOpenPopup();//чистим форму редактирования профиля
 };
 
 function closeEditProfileForm () {
@@ -81,20 +81,22 @@ function submitEditProfileForm (evt) {
   jobProfile.textContent = jobInputAditProfile.value;
   closePopup(popupEditProfile);
   formEditProfile.reset();
-  _disableButtonSave(buttonSubmitSaveEditProfile, validationOptions.disabledButtonClass);
+  //_disableButtonSave(buttonSubmitSaveEditProfile, this._validationOptions.disabledButtonClass);//перешло в FormValidator.js
   };
 
 function openAddImageForm () {
   openPopup(popupAddImage);
-//чистим форму добавления карточки
-  const findAndDeleteErrorAddImage = Array.from(formAddImage.querySelectorAll('.popup__input'));
-    findAndDeleteErrorAddImage.forEach(input => {
-    _checkInputStateValid(input, true, validationOptions);
-  });
+  //убираем для ПР 7 из index.js
+  //const findAndDeleteErrorAddImage = Array.from(formAddImage.querySelectorAll('.popup__input'));
+   // findAndDeleteErrorAddImage.forEach(input => {
+     // _checkInputStateValid(inputElement, /*input, true, */validationOptions);
+  //});
 };
 
 function closeAddImageForm () {
   closePopup(popupAddImage);
+  formAddImagValidator._resetErrorForOpenPopup();//чистим форму добавления карточки
+  formAddImage.reset();//чистим форму добавления карточки от несохранённого текста
 };
 
 function closeBigImage () {
@@ -130,7 +132,7 @@ function fullNewCardTextAndLink (evt) {
 
   renderNewCardElement(cardListWrapper, {name, link});
   formAddImage.reset();
-  _disableButtonSave(buttonSubmitSaveAddImage, validationOptions.disabledButtonClass);
+  //_disableButtonSave(buttonSubmitSaveAddImage, this._validationOptions.disabledButtonClass);//перешло в FormValidator.js
 };
 
 formEditProfile.addEventListener('submit', submitEditProfileForm);
@@ -152,8 +154,6 @@ buttonCloseBigImage.addEventListener('click', () => {
 });
 
 //валидация
-//const formEditProfile = document.querySelector('.popup__form_edit-profile');
-//const formAddImage = document.querySelector('.popup__form_add-image');
 const formEditProfileValidator = new FormValidator(validationOptions, formEditProfile);
 const formAddImagValidator = new FormValidator(validationOptions, formAddImage);
 
@@ -161,17 +161,15 @@ formEditProfileValidator.enableValidation(validationOptions);
 formAddImagValidator.enableValidation(validationOptions);
 
 //убираем для ПР 7 из index.js
-//enableValidation(validationOptions);
+/*enableValidation(validationOptions);
 
-//const templateAddNewCard = document.querySelector('#card_element').content.querySelector('.element');// в классе Card
+const templateAddNewCard = document.querySelector('#card_element').content.querySelector('.element');// в классе Card
 
-//убираем для ПР 7 из index.js
-/*const deleteCardElement = (evt) => {
+const deleteCardElement = (evt) => {
   evt.target.closest('.element').remove();
-};*/
+};
 
-//убираем для ПР 7 из index.js
-/*const createCard = (item) => {
+const createCard = (item) => {
   const cardNewElement = templateAddNewCard.cloneNode(true);
   const cardNewElementTitle = cardNewElement.querySelector('.element__title');
   cardNewElementTitle.textContent = item.name;
@@ -194,9 +192,8 @@ formAddImagValidator.enableValidation(validationOptions);
   });
 
   return cardNewElement;
-};*/
+};
 
-//убираем для ПР 7 из index.js
-/*const renderNewCardElement = (wrap, item) => {
+const renderNewCardElement = (wrap, item) => {
   wrap.prepend(createCard(item));
 };*/
