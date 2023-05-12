@@ -63,12 +63,12 @@ function openEditProfileForm () {
   openPopup(popupEditProfile);
   nameInputAditProfile.value = nameProfile.textContent;
   jobInputAditProfile.value = jobProfile.textContent;
+  formEditProfileValidator.resetErrorForOpenPopup();//чистим форму редактирования профиля от ошибок + кнопка
   //убираем для ПР 7 из index.js
   //const findAndDeleteErrorEditProfile = Array.from(formEditProfile.querySelectorAll('.popup__input'));
     //findAndDeleteErrorEditProfile.forEach(input => {
      // _checkInputStateValid(inputElement, /*input, true, */validationOptions);
   //});
-  formEditProfileValidator._resetErrorForOpenPopup();//чистим форму редактирования профиля
 };
 
 function closeEditProfileForm () {
@@ -81,11 +81,12 @@ function submitEditProfileForm (evt) {
   jobProfile.textContent = jobInputAditProfile.value;
   closePopup(popupEditProfile);
   formEditProfile.reset();
-  //_disableButtonSave(buttonSubmitSaveEditProfile, this._validationOptions.disabledButtonClass);//перешло в FormValidator.js
   };
 
 function openAddImageForm () {
   openPopup(popupAddImage);
+  formAddImagValidator.resetErrorForOpenPopup();//чистим форму добавления карточки от ошибок + кнопка
+  formAddImage.reset();//чистим форму добавления карточки от несохранённого текста
   //убираем для ПР 7 из index.js
   //const findAndDeleteErrorAddImage = Array.from(formAddImage.querySelectorAll('.popup__input'));
    // findAndDeleteErrorAddImage.forEach(input => {
@@ -95,8 +96,8 @@ function openAddImageForm () {
 
 function closeAddImageForm () {
   closePopup(popupAddImage);
-  formAddImagValidator._resetErrorForOpenPopup();//чистим форму добавления карточки
-  formAddImage.reset();//чистим форму добавления карточки от несохранённого текста
+  //formAddImagValidator.resetErrorForOpenPopup();//чистим форму добавления карточки => в открытие
+  //formAddImage.reset();//чистим форму добавления карточки от несохранённого текста => в открытие
 };
 
 function closeBigImage () {
@@ -111,12 +112,24 @@ export const openBigImageCardElement = (name, link) => {
   paragraphOpenBigImage.textContent = name;
 };
 
+//создание новой карточки
+const createCard = (item) => {
+  const card = new Card(item, '.card-template', '.card-template_type_default', openBigImageCardElement); //создаём экземпляр карточки
+  const cardElement = card.generateCard(); //создаём карточку и возвращаем её на страницу
+  return cardElement;
+};
+
 //добавление новой карточки
-  const renderNewCardElement = (wrap, item) => {
+const renderNewCardElement = (wrap, item) => {
+  wrap.prepend(createCard(item));
+};
+
+//разделили
+  /*const renderNewCardElement = (wrap, item) => {
   const card = new Card(item, '.card-template', '.card-template_type_default', openBigImageCardElement); //создаём экземпляр карточки
   const cardElement = card.generateCard(); //создаём карточку и возвращаем её на страницу
   wrap.prepend(cardElement);
-};
+};*/
 
 //карточки при загрузке страницы
 initialCards.forEach((item) => {
@@ -132,7 +145,6 @@ function fullNewCardTextAndLink (evt) {
 
   renderNewCardElement(cardListWrapper, {name, link});
   formAddImage.reset();
-  //_disableButtonSave(buttonSubmitSaveAddImage, this._validationOptions.disabledButtonClass);//перешло в FormValidator.js
 };
 
 formEditProfile.addEventListener('submit', submitEditProfileForm);
@@ -142,7 +154,7 @@ buttonOpenEditProfile.addEventListener('click', openEditProfileForm);
 buttonCloseEditProfile.addEventListener('click', closeEditProfileForm);
 
 buttonOpenAddImage.addEventListener('click', () => {
-  openPopup(popupAddImage);
+  openAddImageForm();
 });
 
 buttonCloseAddImage.addEventListener('click', () => {
@@ -157,8 +169,8 @@ buttonCloseBigImage.addEventListener('click', () => {
 const formEditProfileValidator = new FormValidator(validationOptions, formEditProfile);
 const formAddImagValidator = new FormValidator(validationOptions, formAddImage);
 
-formEditProfileValidator.enableValidation(validationOptions);
-formAddImagValidator.enableValidation(validationOptions);
+formEditProfileValidator.enableValidation();
+formAddImagValidator.enableValidation();
 
 //убираем для ПР 7 из index.js
 /*enableValidation(validationOptions);
