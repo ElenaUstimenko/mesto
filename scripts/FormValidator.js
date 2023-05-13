@@ -42,19 +42,19 @@ export default class FormValidator {
   };
 
   //кнопка Сохранить включается для нажатия
-  _enableButtonSave = (buttonElement, disabledButtonClass) => {
+  _enableButtonSave = () => {
     this.buttonElement.removeAttribute('disabled');
     this.buttonElement.classList.remove(this._validationOptions.disabledButtonClass);
   };
   
   //кнопка Сохранить отключается для нажатия
-  _disableButtonSave = (buttonElement, disabledButtonClass) => {
+  _disableButtonSave = () => {
     this.buttonElement.setAttribute('disabled', true);
     this.buttonElement.classList.add(this._validationOptions.disabledButtonClass);
   };
 
   //валидность формы для кнопки
-  _toggleButtonStateValid = (inputs, submitElement, disabledButtonClass) => {
+  _toggleButtonStateValid = () => {
 
     const formIsValid = this.inputs.every(inputElement => inputElement.validity.valid);
     if (formIsValid) {
