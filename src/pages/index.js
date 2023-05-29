@@ -1,4 +1,4 @@
-import { initialCards, validationOptions } from './constants.js';
+import { initialCards, validationOptions } from '../utils/constants.js';
 import Card from '../components/Сard.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -10,8 +10,8 @@ const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddImage = document.querySelector('.popup_add-image');
 const popupOpenBigImage = document.querySelector('.popup_open-image');
 
-export const formEditProfile = document.querySelector('.popup__form_edit-profile');
-export const formAddImage = document.querySelector('.popup__form_add-image');
+const formEditProfile = document.querySelector('.popup__form_edit-profile');
+const formAddImage = document.querySelector('.popup__form_add-image');
 
 const buttonOpenEditProfile = document.querySelector('.profile__edit-button');
 const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close_edit-profile');
@@ -21,8 +21,8 @@ const buttonCloseAddImage = popupAddImage.querySelector('.popup__close_add-image
 const buttonSubmitSaveAddImage = popupAddImage.querySelector('.popup__save_add-image');
 const buttonCloseBigImage = popupOpenBigImage.querySelector('.popup__close_open-image');
 
-export const nameInputAditProfile = document.querySelector('.popup__input_type_name');
-export const jobInputAditProfile = document.querySelector('.popup__input_type_profession');
+const nameInputAditProfile = document.querySelector('.popup__input_type_name');
+const jobInputAditProfile = document.querySelector('.popup__input_type_profession');
 const nameProfile = document.querySelector('.profile__name');
 const jobProfile = document.querySelector('.profile__text');
 
@@ -30,8 +30,8 @@ const placeTextInputAddImage = document.querySelector('.popup__input_type_place'
 const imageLinkInputAddImage = document.querySelector('.popup__input_type_link');
 const cardListWrapper = document.querySelector('.elements');
 
-export const paragraphOpenBigImage = popupOpenBigImage.querySelector('.popup__paragraph');
-export const imageOpenBigImage = popupOpenBigImage.querySelector('.popup__image');
+const paragraphOpenBigImage = popupOpenBigImage.querySelector('.popup__paragraph');
+const imageOpenBigImage = popupOpenBigImage.querySelector('.popup__image');
 
 import '../pages/index.css' // подключение css
 
@@ -42,6 +42,7 @@ const section = new Section({items: initialCards, renderer: renderCard }, '.elem
 // для каждого попапа создавайте свой экземпляр класса PopupWithForm
 // создаем два экземпляра класса PopupWithForm, в каждый передаем свой коллбек (помимо селектора попапа)
 // в одном случае форма редактирует данные пользователя на странице, во втором - добавляет новую карточку
+
 const popupWithFormEditProfile = new PopupWithForm(popupEditProfile, submitCreateProfile);
 popupWithFormEditProfile.setEventListeners();
 
@@ -53,7 +54,13 @@ export const popupWithZoomImage = new PopupWithImage(popupOpenBigImage);
 popupWithZoomImage.setEventListeners();
 
 // info пользователя => экземпляр класса
-const userInfo = new UserInfo(nameProfile, jobProfile);
+const userInfo = new UserInfo({nameProfile, jobProfile});
+
+//const userInfo = new UserInfo({
+  //name: nameInputAditProfile.value = this._name.textContent,
+  //job: jobInputAditProfile.value = this._job.textContent,
+//});
+
 
 //валидация => экземпляры класса
 export const formEditProfileValidator = new FormValidator(validationOptions, formEditProfile);
@@ -78,15 +85,27 @@ function renderCard(cardData) {
 };
 
 // popup
-function submitCreateProfile() {
-  userInfo.setUserInfo({ name: nameInputAditProfile.value, link: jobInputAditProfile.value });
+function submitCreateProfile(userData) {
+  userInfo.setUserInfo(userData);
   popupWithFormEditProfile.closePopup();
-};
+}; 
+
+// old version
+//function submitCreateProfile() {
+  //userInfo.setUserInfo({ name: nameInputAditProfile.value, link: jobInputAditProfile.value });
+  //popupWithFormEditProfile.closePopup();
+//};
 
 function submitCreateImageCard() {
-  document.querySelector('.elements').prepend(createCard({ name: placeTextInputAddImage.value, link: imageLinkInputAddImage.value }));
+  section.addItem(createCard({ name, link }));
   popupWithFormAddImage.closePopup();
 };
+
+// old version
+//function submitCreateImageCard() {
+  //section.addItem(createCard({ name: placeTextInputAddImage.value, link: imageLinkInputAddImage.value }));
+  //popupWithFormAddImage.closePopup();
+//};
 
 // handleCardClick - функция, которая описывает поведение при нажатии на карточку  
 // функция должна открывать попап с картинкой при клике на карточку
@@ -100,16 +119,19 @@ function handleCardClick(name, link) {
 //слушатели для открытия попапов на кнопки изменений
 buttonOpenEditProfile.addEventListener('click', () => {
   popupWithFormEditProfile.openPopup(); // функцию на экземпляр класса, не на попап
-  userInfo.getUserInfo(); //данные профиля в попап
+  const userData = userInfo.getUserInfo(); // данные профиля в попап - получение
+  popupWithFormEditProfile.setInputValues(userData); // и дальше нужно будет передать эти данные в форму
+  formEditProfileValidator.resetErrorForOpenPopup(); //чистим форму от ошибок + кнопка
 });
 
 buttonOpenAddImage.addEventListener('click', () => {
   popupWithFormAddImage.openPopup();
+  formAddImagValidator.resetErrorForOpenPopup(); //чистим форму от ошибок + кнопка
 });
 
 // popup
-buttonSubmitSaveEditProfile.addEventListener('click', submitCreateProfile);
-buttonSubmitSaveAddImage.addEventListener('click', submitCreateImageCard);
+//buttonSubmitSaveEditProfile.addEventListener('click', submitCreateProfile); //уже есть в PopupWithForm в handleFormSubmit
+//buttonSubmitSaveAddImage.addEventListener('click', submitCreateImageCard);
 
 section.renderItems(); // в конце!
 

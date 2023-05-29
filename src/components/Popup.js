@@ -18,7 +18,7 @@ export default class Popup {
   // приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc
   _handleEscClose(evt) {
     if(evt.key === 'Escape') { 
-      const popup = document.querySelector('.popup_opened'); // ищем открытый popup по классу 'popup_opened'
+      //const popup = document.querySelector('.popup_opened'); 
       this.closePopup();
      };
   };
@@ -35,12 +35,20 @@ export default class Popup {
 
     // закрытие на overlay
     this.popupSelector.addEventListener('mousedown', (evt) => {
-      if(evt.target === evt.currentTarget && this.popupSelector.classList.contains('popup_opened')) {
+      if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
         this.closePopup();
-      };
-    });
+      }
+  }); 
+  
+    // закрытие на overlay - old version
+   // this.popupSelector.addEventListener('mousedown', (evt) => {
+      //if(evt.target === evt.currentTarget && this.popupSelector.classList.contains('popup_opened')) {
+        //this.closePopup();
+      //};
+    //});
   };
 };
+
 
 // класс Popup, который отвечает за открытие и закрытие попапа
 // должно быть 4 метода, описанных в ТЗ, исходя из принципа, что более 

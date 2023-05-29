@@ -16,7 +16,7 @@ export default class Section {
   // отрисовка каждого отдельного элемента должна осуществляться функцией renderer
   renderItems() { // карточки при загрузке страницы
     this._items.forEach((item) => {
-      const card = this._renderer(item);
+      this._renderer(item);
   });
   };
 

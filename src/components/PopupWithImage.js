@@ -4,6 +4,8 @@ import Popup from '../components/Popup.js';
 export default class PopupWithImage extends Popup { 
   constructor (popupSelector) {
     super(popupSelector); // наследуем от Popup popupSelector - селектор конкретного попапа
+    this._textForZoomImage = this.popupSelector.querySelector('.popup__paragraph');
+    this._linkforZoomImage = this.popupSelector.querySelector('.popup__image');
   };
 
   // этот класс должен перезаписывать родительский метод open
@@ -12,8 +14,8 @@ export default class PopupWithImage extends Popup {
   // а потом вызвать метод родительского класса чтобы открыть попап
   openPopup( name, link ) { // данные, чтобы их взять
     super.openPopup(); // вызываем родительский метод, в нём открытие попапа и слушатель на esc
-      this.popupSelector.querySelector('.popup__paragraph').textContent = name; // добавляем данные
-      this.popupSelector.querySelector('.popup__image').src = link;
-      this.popupSelector.querySelector('.popup__paragraph').alt = name; 
+      this._textForZoomImage.textContent = name; // добавляем данные
+      this._linkforZoomImage.src = link;
+      this._linkforZoomImage.alt = name; 
   };
 };  
