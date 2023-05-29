@@ -56,12 +56,6 @@ popupWithZoomImage.setEventListeners();
 // info пользователя => экземпляр класса
 const userInfo = new UserInfo({nameProfile, jobProfile});
 
-//const userInfo = new UserInfo({
-  //name: nameInputAditProfile.value = this._name.textContent,
-  //job: jobInputAditProfile.value = this._job.textContent,
-//});
-
-
 //валидация => экземпляры класса
 export const formEditProfileValidator = new FormValidator(validationOptions, formEditProfile);
 formEditProfileValidator.enableValidation();
@@ -79,8 +73,8 @@ const createCard = (data) => {
 // renderer - функция которая описывает логику создания новой карточки,т.е функция, которая принимает данные,
 // необходимые для создания карточки, затем внутри себя создает ее и добавляет в список через публичный метод этого списка 
 // функция не должна ничего возвращать, а просто создает карточку и добавляет в список (не нужен return)
-function renderCard(cardData) {
-  const cardElement = createCard(cardData);
+function renderCard(/*cardData*/data) {
+  const cardElement = createCard(/*cardData*/data);
   section.addItem(cardElement);
 };
 
@@ -96,8 +90,8 @@ function submitCreateProfile(userData) {
   //popupWithFormEditProfile.closePopup();
 //};
 
-function submitCreateImageCard() {
-  section.addItem(createCard({ name, link }));
+function submitCreateImageCard(data) {
+  section.addItem(createCard(data));
   popupWithFormAddImage.closePopup();
 };
 

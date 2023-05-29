@@ -27,25 +27,12 @@ export default class Popup {
   // модальное окно также закрывается при клике на затемнённую область вокруг формы
   setEventListeners() {
     
-    // закрытие по кнопке-крестику
-    this.popupSelector.querySelector('.popup__close') // popup__close = общий класс у трёх кнопок-крестиков
-    .addEventListener('click', () => {
-      this.closePopup();
-    });
-
-    // закрытие на overlay
+    // закрытие на overlay + по кнопке крестику
     this.popupSelector.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
         this.closePopup();
       }
-  }); 
-  
-    // закрытие на overlay - old version
-   // this.popupSelector.addEventListener('mousedown', (evt) => {
-      //if(evt.target === evt.currentTarget && this.popupSelector.classList.contains('popup_opened')) {
-        //this.closePopup();
-      //};
-    //});
+    }); 
   };
 };
 
