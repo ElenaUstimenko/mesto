@@ -19,7 +19,7 @@ const formAddImage = document.querySelector('.popup__form_add-image');
 
 const buttonOpenEditProfile = document.querySelector('.profile__edit-button');
 const buttonOpenAddImage = document.querySelector('.profile__add-button');
-const buttonOpenUpdateAvatar = document.querySelector('.profile__edit_avatar-button');
+const buttonOpenUpdateAvatar = document.querySelector('.profile__avatar-button');
 
 const nameProfile = document.querySelector('.profile__name');
 const jobProfile = document.querySelector('.profile__text');
