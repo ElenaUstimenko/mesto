@@ -1,4 +1,4 @@
-.profile__group_avatar {
+.profile__group-avatar {
   display:flex;
   position: relative;
   justify-content: center;
@@ -6,6 +6,6 @@
   z-index: 1;
 }
 
-.profile__group_avatar:hover {
+.profile__group-avatar:hover {
   opacity: 0.8;
 }
