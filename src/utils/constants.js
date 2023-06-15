@@ -1,4 +1,4 @@
-const initialCards = [
+const initialCards = [ // не нужно в ПР 9
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -36,4 +36,4 @@ const validationOptions = {
   disabledButtonClass: 'popup__save_inactive',
 };
 
-export { initialCards, validationOptions };
+export { validationOptions };

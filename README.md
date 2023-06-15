@@ -8,7 +8,7 @@
 Проект разрабатывался с применением методологии БЭМ.   
 Файловая структура оформлена в соответствии с правилами Nested БЭМ.  
 
-https://elenaustimenko.github.io/mesto/index.html
+https://elenaustimenko.github.io/mesto/
 
 ______________
 
@@ -23,4 +23,4 @@ The project was built using Webpack.
 The project was designed using the BEM methodology.  
 The file structure is designed in accordance with the rules of Nested BEM.  
 
-https://elenaustimenko.github.io/mesto/index.html
+https://elenaustimenko.github.io/mesto/

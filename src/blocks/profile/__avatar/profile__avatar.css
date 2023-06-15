@@ -4,6 +4,11 @@
   aspect-ratio: 1 / 1;
   margin-bottom: 51px;
   margin-top: 40px;
+  z-index: 0;
+}
+
+.profile__avatar:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 320px) {
