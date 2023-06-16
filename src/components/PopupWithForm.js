@@ -6,21 +6,19 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit; // кроме селектора попапа принимает в конструктор колбэк сабмита формы
     this._formOfPopup = this.popupSelector.querySelector('.popup__form');
     this._submitButton = this._formOfPopup.querySelector('.popup__save');
+    this._inputList = this._formOfPopup.querySelectorAll('.popup__input'); // достаём все элементы полей
   };
 
   // приватный метод _getInputValues, который собирает данные всех полей формы
   _getInputValues() {
-    const inputList = this._formOfPopup.querySelectorAll('.popup__input'); // достаём все элементы полей
-    
-    return Array.from(inputList).reduce((formData, input) => {
+    return Array.from(this._inputList).reduce((formData, input) => {
       formData[input.name] = input.value; // добавляем в этот объект значения всех полей
       return formData; // возвращаем объект значений
     }, {}) // создаём пустой объект
   };
 
   setInputValues(userData) { //передача в метод установки значений инпутов у класса PopupWithForm
-  const inputList = this._formOfPopup.querySelectorAll('.popup__input');
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       input.value = userData[input.name]; 
     })
   };

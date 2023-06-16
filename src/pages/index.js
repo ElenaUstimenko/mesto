@@ -42,37 +42,33 @@ const api = new Api({
 
 let userID = null; // пустой объект для данных профиля
 
-  // деструктурирует массив, первым карточки, вторым информация о пользователе, порядок запросов и ответов сохранился
-  api.getAppInfo()
-  .then(([cards, user]) => {
-    // console.log([cards, user])
-  // card
-  cards.forEach((data) => {
-    const card = new Card({data, handleCardClick, userID, onLikeClick, confirmDeleteCard},
-    '.card-template', '.card-template_type_default').generateCard(); 
-    userID = user._id;
-    section.addItem(card);
-  });
-  // ID information
-  userInfo.setUserInfo({name: user.name, about: user.about, avatar: user.avatar, _id: user._id})
-
+// деструктурирует массив, первым карточки, вторым информация о пользователе, порядок запросов и ответов сохранился
+api.getAppInfo()
+.then(([cards, user]) => {
+// console.log([cards, user])
+cards.forEach((data) => { 
+  userID = user._id;
+  section.addItem(createCard(data)); // card
+})
+// ID information
+userInfo.setUserInfo({name: user.name, about: user.about, avatar: user.avatar, _id: user._id})
 }).catch((err) => console.log(`catch: ${err}`));
 
 //////////////////////////////////////////////////////////// card
 
 function onLikeClick(card) {
-    if(card.isLiked) {
-      api.deleteLike(this.cardID)
-      .then((data) => card.updateLikes(data.likes))
-      .catch((err) => console.log(`catch: ${err}`));
-    } else {
-      api.addLike(this.cardID)
-      .then((data) => card.updateLikes(data.likes))
-      .catch((err) => console.log(`catch: ${err}`));
-    }
-  }; 
+  if(card.isLiked) {
+    api.deleteLike(this.cardID)
+    .then((data) => card.updateLikes(data.likes))
+    .catch((err) => console.log(`catch: ${err}`));
+  } else {
+    api.addLike(this.cardID)
+    .then((data) => card.updateLikes(data.likes))
+    .catch((err) => console.log(`catch: ${err}`));
+  }
+}; 
 
-function renderCard(data) { // => не нужен
+function renderCard(data) {
   const cardElement = createCard(data);
   section.addItem(cardElement);
 };
@@ -91,10 +87,11 @@ popupWithFormAddImage.setEventListeners();
 
 function submitCreateImageCard(data) {
   
-  popupWithFormAddImage.closePopup();
   // вызов для добавления новой карточки => передать сюда данные
   api.newCardData(data).then(post => {
     section.addItem(createCard(post));
+  }).then(() => {
+    popupWithFormAddImage.closePopup() // закрываем только после удачного ответа от сервера
   }).catch((err) => {console.log( `catch: ${err}`)})
 };
 
@@ -108,8 +105,10 @@ popupwithFormConfirmDeleteCard.setEventListeners();
 function deleteCardElement(card) {
   api.deleteCard(card.cardID).then(() => {
     card.deleteCardElement();
+  }).then(() => {
+    popupwithFormConfirmDeleteCard.closePopup(); // закрываем только после удачного ответа от сервера
   }).catch((err) => console.log(`catch: ${err}`)) 
-  console.log(card)
+  // console.log(card)
 };
 
 // delete => second step
@@ -129,6 +128,8 @@ function submitUpdateAvatar(avatar) {
   // по линку заменить фотку аватара 
   api.photoOfAvatar(avatar).then((data) => {
     userInfo.setUserInfo(data)
+  }).then(() => {
+    popupWithFormUpdateAvatar.closePopup(); // закрываем только после удачного ответа от сервера
   }).catch((err) => {console.log( `catch: ${err}`)})
 }; 
 
@@ -140,6 +141,8 @@ function submitCreateProfile({name, about}) {
 
   api.userInformation({name, about}).then((name, about) => {
     userInfo.setUserInfo(name, about);
+  }).then(() => {
+    popupWithFormEditProfile.closePopup(); // закрываем только после удачного ответа от сервера
   }).catch((err) => {console.log( `catch: ${err}`)})
 }; 
 
@@ -170,7 +173,7 @@ formApdateAvatarValidator.enableValidation();
 
 //////////////////////////////////////////////////////////// listeners
 
-//слушатели для открытия попапов на кнопки изменений
+// слушатели для открытия попапов на кнопки изменений
 buttonOpenEditProfile.addEventListener('click', () => {
   popupWithFormEditProfile.openPopup(); // функцию на экземпляр класса, не на попап
   const userData = userInfo.getUserInfo(); // данные профиля в попап - получение

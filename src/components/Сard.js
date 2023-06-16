@@ -46,8 +46,9 @@ export default class Card {
 
     this._element.userID = this.userID;
     this._availabilityButtonDelete(); // видимость кнопки удаления
-    
+    this.updateLikes(this.likes);
     return this._element;
+    
    };
 
   _setEventListeners() {

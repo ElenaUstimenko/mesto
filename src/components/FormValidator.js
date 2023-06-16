@@ -73,10 +73,6 @@ export default class FormValidator {
         });
       });
     this._toggleButtonStateValid();
-
-    //this.form.addEventListener('submit', () => { //перенесено в resetErrorForOpenPopup на открытие
-     // this._disableButtonSave(this.form.querySelector(this._validationOptions.submitSelector));//кнопка очищается при закрытии
-    //});
   };
 
   //публичный метод enableValidation, который включает валидацию формы
